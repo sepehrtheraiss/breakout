@@ -4,7 +4,7 @@ class Ball {
         velocity, 
         size,
         color,
-        imageSrc
+        imageSrc,
     }) {
         this.position = position;
         this.origPosition = structuredClone(position); 
@@ -15,14 +15,21 @@ class Ball {
         this.score = 0;
         this.lives = 3;
         this.state = "pause";
+        this.img = new Image();
+        this.img.src = imageSrc;
+
     }
 
     draw() {
-        ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y , this.size.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.closePath();
+        if (this.imgSrc != "") {
+            ctx.drawImage(this.img, this.position.x, this.position.y, this.size.radius * 1.5, this.size.radius * 1.5)
+        } else {
+            ctx.beginPath();
+            ctx.arc(this.position.x, this.position.y , this.size.radius, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.closePath();
+        }
     }
 
     move(paddlePosition, paddleSize, bricks) {
@@ -85,21 +92,29 @@ class Paddle {
         velocity, 
         size,
         color,
-        keyPressed
+        keyPressed,
+        imageSrc,
     }) {
         this.position = position;
         this.velocity = velocity;
         this.size = size;
         this.color = color;
         this.keyPressed = keyPressed;
+        this.img = new Image();
+        this.img.src = imageSrc;
     }
     
     draw() {
-        ctx.beginPath();
-        ctx.rect(this.position.x, this.position.y, this.size.width, this.size.height);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.closePath();
+
+        if (this.imgSrc != "") {
+            ctx.drawImage(this.img, this.position.x, this.position.y, this.size.width * 1.5, this.size.height* 1.5)
+        } else {
+            ctx.beginPath();
+            ctx.rect(this.position.x, this.position.y, this.size.width, this.size.height);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.closePath();
+        }
     }
 
     move() {
@@ -132,7 +147,8 @@ class Bricks {
         offsetTop,
         offsetLeft,
         size,
-        color
+        color,
+        imageSrc,
     }) {
         this.row = row;
         this.column = column;
@@ -141,6 +157,8 @@ class Bricks {
         this.offsetLeft = offsetLeft;
         this.size = size;
         this.color = color;
+        this.img = new Image();
+        this.img.src = imageSrc;
 
         this.bricks = [];
         for (let c = 0; c < this.column; c++) {
@@ -159,11 +177,15 @@ class Bricks {
               const brickY = r * (this.size.height + this.padding) + this.offsetTop;
               this.bricks[c][r].x = brickX;
               this.bricks[c][r].y = brickY;
-              ctx.beginPath();
-              ctx.rect(brickX, brickY, brickWidth, brickHeight);
-              ctx.fillStyle = this.color;
-              ctx.fill();
-              ctx.closePath();
+              if(this.imageSrc != "") {
+                ctx.drawImage(this.img, 20, 240, 170, 55, brickX, brickY, brickWidth, brickHeight);
+              } else {
+                ctx.beginPath();
+                ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.closePath();
+              }
             }
           }
         }

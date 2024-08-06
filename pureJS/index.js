@@ -15,7 +15,7 @@ const ball = new Ball({position: {x: ballX, y: ballY},
                        velocity: {dx: ballDx, dy: ballDy},
                        size: {radius: ballRadius}, 
                        color: "#0095DD",
-                       imageSrc: "baseball.png",
+                       imageSrc: "img/baseball.png"
                       });
 
 // paddle
@@ -30,6 +30,7 @@ const paddle = new Paddle({ position: {x: paddleX, y: paddleY},
                             size: {width: paddleWidth, height: paddleHeight},
                             color: "#0095DD",
                             keyPressed: keyPressed,
+                            imageSrc: "img/paddle.png"
                           });
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -50,7 +51,8 @@ const bricks = new Bricks({
                             offsetTop: brickOffsetTop,
                             offsetLeft: brickOffsetLeft,
                             size: {width: brickWidth, height: brickHeight},
-                            color: "#0095DD",
+                            color: "brown",
+                            imageSrc: "img/assets.png",
                           });
 
 function animate() {
@@ -58,7 +60,7 @@ function animate() {
 
   // page refresh
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  backgroundDraw("black");
+  backgroundDraw("img/background.png","black");
 
   drawScore(ball.score);
   if(ball.score == bricks.row * bricks.column) {
